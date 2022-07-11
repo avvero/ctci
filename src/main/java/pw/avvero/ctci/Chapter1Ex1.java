@@ -29,7 +29,7 @@ public class Chapter1Ex1 {
     public static boolean hasUniqueOnly3(String s) {
         char[] chars = s.toCharArray();
         Arrays.sort(chars);
-        for (int i = 0; i < s.length() - 1; i++) {
+        for (int i = 0; i < chars.length - 1; i++) {
             if (chars[i] == chars[i + 1]) return false;
         }
         return true;
