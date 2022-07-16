@@ -7,11 +7,10 @@ public class Chapter1Ex6 {
         for (int i = 0; i < input.length; i++) {
             output[i] = new int[input.length];
         }
-        int offset = input.length - 1;
-        for (int i = 0; i < input.length; i++) {
+        for (int i = input.length - 1; i >= 0; i--) {
             int[] row = input[i];
             for (int j = 0; j < row.length; j++) {
-                output[offset - i][offset - j] = input[j][offset - i];
+                output[i][input.length - 1 - j] = input[j][i];
             }
         }
         return output;
