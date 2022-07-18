@@ -28,5 +28,26 @@ public class Chapter1Ex7 {
         }
         return output;
     }
+    public static int[][] zerofy2(int[][] input) {
+        boolean[] rows = new boolean[input.length];
+        boolean[] columns = new boolean[input[0].length];
+
+        for (int i = 0; i < input.length; i ++) {
+            for (int j = 0; j < input[i].length; j++) {
+                if (input[i][j] == 0) {
+                    rows[i] = true;
+                    columns[j] = true;
+                }
+            }
+        }
+        for (int i = 0; i < input.length; i ++) {
+            for (int j = 0; j < input[i].length; j++) {
+                if (rows[i] || columns[j]) {
+                    input[i][j] = 0;
+                }
+            }
+        }
+        return input;
+    }
 
 }
