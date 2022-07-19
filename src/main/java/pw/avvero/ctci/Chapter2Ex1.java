@@ -11,11 +11,10 @@ public class Chapter2Ex1 {
         Node<T> current = origin;
         while (current.getNext() != null) {
             Node<T> next = current.getNext();
-            if (set.contains(next.getValue())) {
-                current.setNext(next.getNext());
-            } else {
-                set.add(next.getValue());
+            if (set.add(next.getValue())) {
                 current = next;
+            } else {
+                current.setNext(next.getNext());
             }
         }
         return origin;

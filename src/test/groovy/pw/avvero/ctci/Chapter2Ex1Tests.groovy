@@ -10,10 +10,11 @@ class Chapter2Ex1Tests extends Specification {
         expect:
         Chapter2Ex1.removeDuplicates(Node.of(list)) == Node.of(result)
         where:
-        list      || result
-        []        || []
-        [1, 2, 3] || [1, 2, 3]
-        [1, 2, 2] || [1, 2]
-        [2, 2, 2] || [2]
+        list                  || result
+        []                    || []
+        [1, 2, 3]             || [1, 2, 3]
+        [1, 2, 2]             || [1, 2]
+        [2, 2, 2]             || [2]
+        [1, 1, 2, 2, 3, 3, 4] || [1, 2, 3, 4]
     }
 }
