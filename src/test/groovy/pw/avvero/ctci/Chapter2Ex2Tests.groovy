@@ -3,6 +3,8 @@ package pw.avvero.ctci
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import java.util.concurrent.atomic.AtomicInteger
+
 class Chapter2Ex2Tests extends Specification {
 
     @Unroll
@@ -24,6 +26,21 @@ class Chapter2Ex2Tests extends Specification {
     def "2: #k to last element from #list is #result"() {
         expect:
         Chapter2Ex2.findKthToLast(Node.of(list), k)?.value == result
+        where:
+        list      | k || result
+        []        | 0 || null
+        [1]       | 1 || 1
+        [1, 2]    | 1 || 2
+        [1, 2, 3] | 1 || 3
+        [1, 2, 3] | 2 || 2
+        [1, 2, 3] | 3 || 1
+        [1, 2, 3] | 4 || null
+    }
+
+    @Unroll
+    def "3: #k to last element from #list is #result"() {
+        expect:
+        Chapter2Ex2.findKthToLast2(Node.of(list), new AtomicInteger(k))?.value == result
         where:
         list      | k || result
         []        | 0 || null
