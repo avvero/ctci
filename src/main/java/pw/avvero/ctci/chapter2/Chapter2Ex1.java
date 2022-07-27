@@ -1,4 +1,4 @@
-package pw.avvero.ctci;
+package pw.avvero.ctci.chapter2;
 
 import java.util.HashSet;
 

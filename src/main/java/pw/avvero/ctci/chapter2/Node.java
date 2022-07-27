@@ -1,8 +1,7 @@
-package pw.avvero.ctci;
+package pw.avvero.ctci.chapter2;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class Node<T> {
 

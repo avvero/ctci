@@ -1,4 +1,4 @@
-package pw.avvero.ctci;
+package pw.avvero.ctci.chapter1;
 
 public class Chapter1Ex2 {
 
