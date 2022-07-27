@@ -24,6 +24,12 @@ public class Node<T> {
         this.value = value;
     }
 
+    public static <T> Node<T> of(T value) {
+        Node<T> node = new Node<>();
+        node.setValue(value);
+        return node;
+    }
+
     public static <T> Node<T> of(List<T> list) {
         Iterator<T> iterator = list.iterator();
         Node<T> prev = new Node<>();
