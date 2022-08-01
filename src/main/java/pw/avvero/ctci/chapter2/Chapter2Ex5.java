@@ -6,15 +6,28 @@ public class Chapter2Ex5 {
         Integer sumValue = high / 10 + a.getValue() + b.getValue();
         Integer low = sumValue % 10;
         Node<Integer> current = Node.of(low);
-        if (a.getNext() != null) {
-            current.setNext(sumReversed(a.getNext(), b.getNext(), sumValue - low));
+        if (a.getNext() != null || b.getNext() != null) {
+            Node<Integer> nextA = a.getNext() != null ? a.getNext() : Node.of(0);
+            Node<Integer> nextB = b.getNext() != null ? b.getNext() : Node.of(0);
+            current.setNext(sumReversed(nextA, nextB, sumValue - low));
         }
         return current;
     }
 
     public static Node<Integer> sum(Node<Integer> a, Node<Integer> b) {
-        if (a.getNext() != null) {
-            Node<Integer> next = sum(a.getNext(), b.getNext());
+        if (a.getNext() != null || b.getNext() != null) {
+            Node<Integer> nextA = a.getNext();
+            Node<Integer> nextB = b.getNext();
+            if (a.getNext() == null) {
+                nextA = a;
+                a = Node.of(0);
+            }
+            if (b.getNext() == null) {
+                nextB = b;
+                b = Node.of(0);
+            }
+
+            Node<Integer> next = sum(nextA, nextB);
             Integer nextValue = next.getValue();
             Integer high = 0;
             if (nextValue >= 10) {
