@@ -15,31 +15,59 @@ public class Chapter2Ex5 {
     }
 
     public static Node<Integer> sum(Node<Integer> a, Node<Integer> b) {
-        if (a.getNext() != null || b.getNext() != null) {
-            Node<Integer> nextA = a.getNext();
-            Node<Integer> nextB = b.getNext();
-            if (a.getNext() == null) {
-                nextA = a;
-                a = Node.of(0);
-            }
-            if (b.getNext() == null) {
-                nextB = b;
-                b = Node.of(0);
-            }
-
-            Node<Integer> next = sum(nextA, nextB);
-            Integer nextValue = next.getValue();
-            Integer high = 0;
-            if (nextValue >= 10) {
-                Integer low = nextValue % 10;
-                high = (next.getValue() - low) / 10;
-                next.setValue(low);
-            }
-            Node<Integer> current = Node.of(high + a.getValue() + b.getValue());
-            current.setNext(next);
-            return current;
+        int aLength = length(a);
+        int bLength = length(b);
+        if (aLength > bLength) {
+            b = inline(b, bLength, aLength);
         } else {
-            return Node.of(a.getValue() + b.getValue());
+            a = inline(a, aLength, bLength);
         }
+        return sumInlined(a, b).node;
+    }
+
+    private static Pair sumInlined(Node<Integer> a, Node<Integer> b) {
+        if (a.getNext() == null) {
+            int value = a.getValue() + b.getValue();
+            int lowDigit = value % 10;
+            Node<Integer> node = Node.of(lowDigit);
+            return Pair.of(node, (value - lowDigit) / 10);
+        } else {
+            Pair next = sumInlined(a.getNext(), b.getNext());
+            int value = a.getValue() + b.getValue() + next.highDigit;
+            int lowDigit = value % 10;
+            Node<Integer> node = Node.of(lowDigit);
+            node.setNext(next.node);
+            return Pair.of(node, (value - lowDigit) / 10);
+        }
+    }
+
+    private static class Pair {
+        private Node<Integer> node;
+        private int highDigit;
+        private static Pair of(Node<Integer> node, int highDigit) {
+            Pair pair = new Pair();
+            pair.node = node;
+            pair.highDigit = highDigit;
+            return pair;
+        }
+    }
+
+    private static int length(Node<Integer> list) {
+        int l = list != null ? 1 : 0;
+        while (list != null && list.getNext() != null) {
+            l++;
+            list = list.getNext();
+        }
+        return l;
+    }
+
+    private static Node<Integer> inline(Node<Integer> list, int length, int targetLength) {
+        Node<Integer> result = list;
+        for (int i = 0; i < (targetLength - length); i++) {
+            Node<Integer> head = Node.of(0);
+            head.setNext(result);
+            result = head;
+        }
+        return result;
     }
 }
