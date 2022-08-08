@@ -17,7 +17,21 @@ public class Chapter2Ex6 {
         return list;
     }
 
-    public static Node<String> find2(Node<String> list) {
-        return list;
+    public static Node<String> find2(Node<String> head) {
+        Node<String> slow = head;
+        Node<String> fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow.getValue().equals(fast.getValue())) {
+                break;
+            }
+        }
+        slow = head;
+        while (!slow.getValue().equals(fast.getValue())) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return fast;
     }
 }
