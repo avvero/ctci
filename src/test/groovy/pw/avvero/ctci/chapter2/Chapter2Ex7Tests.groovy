@@ -11,6 +11,8 @@ class Chapter2Ex7Tests extends Specification {
         Chapter2Ex7.isPalindrome(Node.of(list)) == result
         where:
         list                      || result
+        [0]                       || true
+        [0, 1, 0]                 || true
         [0, 1, 2, 1, 0]           || true
         ["a", "b", "c"]           || false
         ["a", "b", "a"]           || true
