@@ -1,4 +1,5 @@
-package pw.avvero.ctci.chapter2
+package pw.avvero.ctci.chapter3
+
 
 import spock.lang.Specification
 import spock.lang.Unroll

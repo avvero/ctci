@@ -1,4 +1,4 @@
-package pw.avvero.ctci.chapter2;
+package pw.avvero.ctci.chapter3;
 
 public class ListStack<T> {
 

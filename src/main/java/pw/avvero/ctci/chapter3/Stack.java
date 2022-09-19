@@ -1,44 +1,37 @@
-package pw.avvero.ctci.chapter2;
+package pw.avvero.ctci.chapter3;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Queue<T> {
+public class Stack<T> {
 
-    private Node<T> first;
-    private Node<T> last;
+    private Node<T> head;
 
-    public void add(T value) {
-        if (first == null) {
-            first = Node.of(value);
-            last = null;
-        } else if (last == null) {
-            first.next = Node.of(value);
-            last = first.next;
+    public void push(T value) {
+        if (head == null) {
+            head = Node.of(value);
         } else {
-            last.next = Node.of(value);
-            last = last.next;
+            head = Node.of(value, head);
         }
     }
 
-    public T poll() {
-        if (first == null) return null;
-        T value = first.value;
-        first = first.next;
-        return value;
+    public T pop() {
+        Node<T> result = head;
+        head = result.next;
+        return result.value;
     }
 
     public T peek() {
-        return first != null ? first.value : null;
+        return head != null ? head.value : null;
     }
 
     @Override
     public String toString() {
-        if (first == null) return "[]";
+        if (head == null) return "[]";
 
         Set<Node<T>> cache = new HashSet<>();
         StringBuilder s = new StringBuilder("[");
-        Node<T> node = first;
+        Node<T> node = head;
         do {
             s.append(node.value);
             node = node.next;
