@@ -27,25 +27,24 @@ class Chapter3Ex0Tests extends Specification {
         stack.toString() == '[]'
     }
 
-
     @Unroll
     def "1: #Queue implementation"() {
         when:
-        def stack = new Queue()
-        stack.add("2")
+        def queue = new Queue()
+        queue.add("2")
         then:
-        stack.peek() == "2"
-        stack.toString() == '[2]'
+        queue.peek() == "2"
+        queue.toString() == '[2]'
         when:
-        stack.add("1")
+        queue.add("1")
         then:
-        stack.peek() == "2"
-        stack.toString() == '[2, 1]'
+        queue.peek() == "2"
+        queue.toString() == '[2, 1]'
         when:
-        stack.poll() == "2"
-        stack.poll() == "1"
+        queue.poll() == "2"
+        queue.poll() == "1"
         then:
-        stack.peek() == null
-        stack.toString() == '[]'
+        queue.peek() == null
+        queue.toString() == '[]'
     }
 }
