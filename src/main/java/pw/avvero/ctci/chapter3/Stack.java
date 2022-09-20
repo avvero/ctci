@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Stack<T> {
 
-    private Node<T> head;
+    Node<T> head;
     private int size;
 
     public void push(T value) {

@@ -3,7 +3,7 @@ package pw.avvero.ctci.chapter3;
 public class StackPack<T> {
 
     private final int stackMaxSize;
-    private Stack<Stack<T>> head;
+    private Stack<Tuple<Integer, Stack<T>>> head;
 
     public StackPack(int stackMaxSize) {
         this.stackMaxSize = stackMaxSize;
@@ -13,25 +13,25 @@ public class StackPack<T> {
         if (head == null) {
             head = new Stack<>();
             Stack<T> subStack = new Stack<>();
-            head.push(subStack);
+            head.push(new Tuple<>(0, subStack));
             subStack.push(value);
-        } else if (head.peek().getSize() < stackMaxSize) {
-            head.peek().push(value);
+        } else if (head.peek().v.getSize() < stackMaxSize) {
+            head.peek().v.push(value);
         } else {
             Stack<T> subStack = new Stack<>();
-            head.push(subStack);
+            head.push(new Tuple<>(head.peek().k + 1, subStack));
             subStack.push(value);
         }
     }
 
     public T pop() {
         if (head == null) return null;
-        Stack<T> subStack = head.peek();
+        Stack<T> subStack = head.peek().v;
         do {
             if (subStack == null) return null;
             T value = subStack.pop();
             if (value == null) {
-                subStack = head.pop();
+                subStack = head.pop().v;
             } else {
                 if (subStack.peek() == null) {
                     head.pop();
@@ -41,9 +41,19 @@ public class StackPack<T> {
         } while (true);
     }
 
+    public T popAt(int i) {
+        if (head == null) return null;
+        Node<Tuple<Integer, Stack<T>>> node = head.head;
+        do {
+            if (node.value.k == i) return node.value.v.pop();
+            node = node.next;
+        } while (node != null);
+        return null;
+    }
+
     public T peek() {
         if (head.peek() == null) return null;
-        return head.peek().peek();
+        return head.peek().v.peek();
     }
 
     @Override
