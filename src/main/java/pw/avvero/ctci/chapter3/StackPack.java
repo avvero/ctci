@@ -2,7 +2,7 @@ package pw.avvero.ctci.chapter3;
 
 public class StackPack<T> {
 
-    private int stackMaxSize;
+    private final int stackMaxSize;
     private Stack<Stack<T>> head;
 
     public StackPack(int stackMaxSize) {
