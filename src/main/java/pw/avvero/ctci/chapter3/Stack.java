@@ -6,6 +6,7 @@ import java.util.Set;
 public class Stack<T> {
 
     private Node<T> head;
+    private int size;
 
     public void push(T value) {
         if (head == null) {
@@ -13,16 +14,22 @@ public class Stack<T> {
         } else {
             head = Node.of(value, head);
         }
+        size++;
     }
 
     public T pop() {
         Node<T> result = head;
         head = result.next;
+        size--;
         return result.value;
     }
 
     public T peek() {
         return head != null ? head.value : null;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     @Override
