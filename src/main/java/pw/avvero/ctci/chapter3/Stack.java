@@ -9,14 +9,6 @@ public class Stack<T> {
     Node<T> head;
     private int size;
 
-    public static <T> Stack<T> of(List<T> entries) {
-        Stack<T> stack = new Stack<>();
-        for (T t : entries) {
-            stack.push(t);
-        }
-        return stack;
-    }
-
     public void push(T value) {
         if (head == null) {
             head = Node.of(value);
