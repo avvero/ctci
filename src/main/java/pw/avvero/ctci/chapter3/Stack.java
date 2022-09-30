@@ -20,6 +20,7 @@ public class Stack<T> {
 
     public T pop() {
         Node<T> result = head;
+        if (head == null) return null;
         head = result.next;
         size--;
         return result.value;
