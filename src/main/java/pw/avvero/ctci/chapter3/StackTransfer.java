@@ -13,8 +13,7 @@ public class StackTransfer {
     }
 
     public void process() {
-        Integer n = source.peek();
-        if (n == null) {
+        if (source.peek() == null) {
             return;
         }
         move(source.getSize(), source, target, middle);
