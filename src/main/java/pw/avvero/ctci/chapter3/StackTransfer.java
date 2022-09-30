@@ -1,12 +1,12 @@
 package pw.avvero.ctci.chapter3;
 
-public class StackTransfer {
+public class StackTransfer<T> {
 
-    private final Stack<Integer> source;
-    private final Stack<Integer> middle;
-    private final Stack<Integer> target;
+    private final Stack<T> source;
+    private final Stack<T> middle;
+    private final Stack<T> target;
 
-    public StackTransfer(Stack<Integer> source, Stack<Integer> middle, Stack<Integer> target) {
+    public StackTransfer(Stack<T> source, Stack<T> middle, Stack<T> target) {
         this.source = source;
         this.middle = middle;
         this.target = target;
@@ -19,7 +19,7 @@ public class StackTransfer {
         move(source.getSize(), source, target, middle);
     }
 
-    private void move(Integer n, Stack<Integer> source, Stack<Integer> target, Stack<Integer> middle) {
+    private void move(Integer n, Stack<T> source, Stack<T> target, Stack<T> middle) {
         if (n == 1) {
             target.push(source.pop());
             return;
