@@ -3,7 +3,6 @@ package pw.avvero.ctci.chapter3;
 public class QueueStack<T> {
 
     public Stack<T> stack = new Stack<>();
-    public Stack<T> view = new Stack<>();
 
     public void add(T value) {
         stack.push(value);
