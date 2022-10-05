@@ -41,16 +41,13 @@ public class AnimalQueue {
         queue.add(animal);
     }
 
-    public Animal dequeueAny() {
+    public Animal dequeue() {
         return queue.poll();
     }
 
-    public Dog dequeueDog() {
-        return (Dog) queue.poll();
-    }
-
-    public Cat dequeueCat() {
-        return (Cat) queue.poll();
+    public <T> T dequeue(Class<T> clazz) {
+        Animal animal = queue.poll();
+        return clazz.isInstance(animal) ? (T) animal : null;
     }
 
     @Override

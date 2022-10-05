@@ -20,7 +20,7 @@ class Chapter3Ex7Tests extends Specification {
         then:
         queue.toString() == '[Dog 3, Dog 2, Cat 3, Dog 1, Cat 2, Cat 1]'
         and:
-        queue.dequeueAny() == new Dog("3")
+        queue.dequeue() == new Dog("3")
         and:
         queue.toString() == '[Dog 2, Cat 3, Dog 1, Cat 2, Cat 1]'
     }
@@ -38,7 +38,7 @@ class Chapter3Ex7Tests extends Specification {
         then:
         queue.toString() == '[Dog 3, Dog 2, Cat 3, Dog 1, Cat 2, Cat 1]'
         and:
-        queue.dequeueDog() == new Dog("3")
+        queue.dequeue(Dog) == new Dog("3")
         and:
         queue.toString() == '[Dog 2, Cat 3, Dog 1, Cat 2, Cat 1]'
     }
@@ -56,7 +56,7 @@ class Chapter3Ex7Tests extends Specification {
         then:
         queue.toString() == '[Dog 3, Dog 2, Cat 3, Dog 1, Cat 2, Cat 1]'
         and:
-        queue.dequeueCat() == new Cat("3")
+        queue.dequeue(Cat) == new Cat("3")
         and:
         queue.toString() == '[Dog 3, Dog 2, Dog 1, Cat 2, Cat 1]'
     }
