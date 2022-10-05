@@ -42,12 +42,27 @@ public class AnimalQueue {
     }
 
     public Animal dequeue() {
-        return queue.poll();
+        return dequeue(Animal.class);
     }
 
     public <T> T dequeue(Class<T> clazz) {
         Animal animal = queue.poll();
-        return clazz.isInstance(animal) ? (T) animal : null;
+        if (clazz.isInstance(animal)) {
+            return (T) animal;
+        } else {
+            T result = null;
+            Queue<Animal> buffer = new Queue<>();
+            while (animal != null) {
+                if (result == null && clazz.isInstance(animal)) {
+                    result = (T) animal;
+                } else {
+                    buffer.add(animal);
+                }
+                animal = queue.poll();
+            }
+            queue = buffer;
+            return result;
+        }
     }
 
     @Override
