@@ -1,6 +1,6 @@
 package pw.avvero.ctci.chapter4;
 
-public class Tree<T extends Comparable<T>> {
+public class BinaryTree<T extends Comparable<T>> {
 
     Node<T> root;
 
@@ -11,6 +11,12 @@ public class Tree<T extends Comparable<T>> {
 
         public Node(T value) {
             this.value = value;
+        }
+
+        public Node(Node<T> left, T value, Node<T> right) {
+            this.left = left;
+            this.value = value;
+            this.right = right;
         }
 
         @Override
@@ -32,11 +38,17 @@ public class Tree<T extends Comparable<T>> {
         }
     }
 
-    public static <T extends Comparable<T>> Tree<T> of(T... values) {
-        Tree<T> tree = new Tree<>();
+    public static <T extends Comparable<T>> BinaryTree<T> of(T... values) {
+        BinaryTree<T> tree = new BinaryTree<>();
         for (T node : values) {
             tree.add(node);
         }
+        return tree;
+    }
+
+    public static <T extends Comparable<T>> BinaryTree<T> of(Node<T> node) {
+        BinaryTree<T> tree = new BinaryTree<>();
+        tree.root = node;
         return tree;
     }
 
