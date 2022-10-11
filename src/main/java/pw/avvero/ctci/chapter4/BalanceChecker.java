@@ -19,8 +19,7 @@ public class BalanceChecker {
         int lh = height(node.left) + 1;
         int rh = height(node.right) + 1;
 
-        if (lh - rh > 1) throw new RuntimeException();
-        if (rh - lh > 1) throw new RuntimeException();
+        if (Math.abs(lh - rh) > 1) throw new RuntimeException();
 
         return Math.max(lh, rh);
     }
