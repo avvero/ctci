@@ -4,7 +4,7 @@ import pw.avvero.ctci.chapter4.BinaryTree.Node
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class BinaryTreeTests extends Specification {
+class Chapter4Ex1Tests extends Specification {
 
     @Unroll
     def "Tree is balanced = #balanced"() {
