@@ -1,14 +1,14 @@
 package pw.avvero.ctci.chapter4
 
-import pw.avvero.ctci.chapter4.BinaryTree.Node
+
+import pw.avvero.ctci.chapter4.Graph.Vertex
 import spock.lang.Specification
 import spock.lang.Unroll
-import pw.avvero.ctci.chapter4.Graph.Vertex
 
 class Chapter4Ex2Tests extends Specification {
 
     @Unroll
-    def "Direct graph"() {
+    def "There is a path between #start and #end: #pathExists"() {
         when:
         def graph = new Graph(vertices: [
                 new Vertex(value: "A", nodes: ["B"]),
@@ -18,7 +18,7 @@ class Chapter4Ex2Tests extends Specification {
                 new Vertex(value: "D", nodes: ["B"]),
         ])
         then:
-        GraphWalker.pathExists(graph, start, end) == pathExists
+        new GraphWalker().pathExists(graph, start, end) == pathExists
         where:
         start | end || pathExists
         "A"   | "B" || true
