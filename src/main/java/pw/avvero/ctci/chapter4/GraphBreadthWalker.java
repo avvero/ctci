@@ -1,6 +1,7 @@
 package pw.avvero.ctci.chapter4;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 public class GraphBreadthWalker<T> {
@@ -11,15 +12,20 @@ public class GraphBreadthWalker<T> {
         if (start == null || end == null) return false;
         if (start.equals(end)) return true;
 
-        passed.add(start);
+        LinkedList<T> queue = new LinkedList<T>();
+        queue.add(start);
 
-        Graph.Vertex<T> vertex = getVertex(graph, start);
-        if (vertex == null) return false;
+        while (queue.peek() != null) {
+            T current = queue.poll();
 
-        for (T node : vertex.nodes) {
-            if (passed.contains(node)) return false;
-            boolean pathExists = pathExists(graph, node, end);
-            if (pathExists) return true;
+            if (passed.contains(current)) return false;
+            passed.add(current);
+
+            if (current.equals(end)) return true;
+
+            Graph.Vertex<T> vertex = getVertex(graph, current);
+            if (vertex == null) return false;
+            queue.addAll(vertex.nodes);
         }
         return false;
     }
