@@ -11,7 +11,7 @@ class Chapter4Ex4Tests extends Specification {
         when:
         println tree.prettyPrint()
         then:
-        TreeSlasher.getLayers(tree) == layers
+        TreeSlicer.getLayers(tree) == layers
         where:
         layers                               | tree
         [0: [5], 1: [3], 2: [1]]             | BinaryTree.of(5, 3, 1)
