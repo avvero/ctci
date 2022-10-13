@@ -3,7 +3,7 @@ package pw.avvero.ctci.chapter4;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GraphWalker<T> {
+public class GraphBreadthWalker<T> {
 
     Set<T> passed = new HashSet<>();
 
