@@ -21,7 +21,7 @@ class Chapter4Ex5Tests extends Specification {
         false        | BinaryTree.of(new Node(new Node(new Node(3), 6, new Node(5)), 1, new Node(null, 3, new Node(7))))
         false        | BinaryTree.of(new Node(new Node(9), 3, new Node(new Node(15), 20, new Node(7))))
         false        | BinaryTree.of(new Node(new Node(new Node(new Node(4), 3, new Node(4)), 2, new Node(3)), 1, new Node(2)))
-        true         | TreeBuilder.fromOrderedList([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as Integer[])
+        true         | TreeBuilder.fromOrderedList([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] as Integer[])
         false        | BinaryTree.of(new Node(new Node(null, 10, new Node(25)), 20, new Node(30)))
     }
 
