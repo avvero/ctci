@@ -8,6 +8,7 @@ public class BinaryTree<T extends Comparable<T>> {
         Node<T> left;
         T value;
         Node<T> right;
+        Node<T> parent;
 
         public Node(T value) {
             this.value = value;

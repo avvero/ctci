@@ -1,6 +1,5 @@
 package pw.avvero.ctci.chapter4
 
-
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -21,6 +20,8 @@ class Chapter4Ex6Tests extends Specification {
         5       | 6
         9       | 10
         14      | 15
+        12      | 13
+        10      | 11
     }
 
 
