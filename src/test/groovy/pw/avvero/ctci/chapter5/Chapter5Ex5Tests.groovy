@@ -3,7 +3,7 @@ package pw.avvero.ctci.chapter5
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class Chapter5Ex4Tests extends Specification {
+class Chapter5Ex5Tests extends Specification {
 
     @Unroll
     def "It's required #n bits to make #one be like #two"() {
