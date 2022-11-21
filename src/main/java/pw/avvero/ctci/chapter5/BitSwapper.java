@@ -11,6 +11,9 @@ public class BitSwapper {
         // 170 = 10101010
         n = (n << 1 & 170) | (n >> 1 & 85);
         //
+        if (n == 0) {
+            return "00000000";
+        }
         StringBuilder sb = new StringBuilder();
         while (n != 0) {
             if (n == 1) {
@@ -21,6 +24,9 @@ public class BitSwapper {
                 sb.append(rm == 1 ? 1 : 0);
                 n = n / 2;
             }
+        }
+        while (sb.length() < s.length()) {
+            sb.append("0");
         }
         return sb.reverse().toString();
     }
