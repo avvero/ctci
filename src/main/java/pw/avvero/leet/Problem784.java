@@ -13,54 +13,37 @@ public class Problem784 {
     // 1000
 
     public List<String> letterCasePermutation(String s) {
-        List<String> result = new ArrayList<>();
-//        result.add(s);
-        char[] entry = s.toCharArray();
-        permutate(result, entry, 0, 0);
-        if (result.size() == 1 && !result.get(0).equals(s)) {
-            result.add(s);
-        }
-        return new HashSet<>(result).stream().toList();
-    }
+        List<List<Integer>> mutations = new ArrayList();
+        List<Integer> entry = new ArrayList<>();
+        mutate(s.toCharArray(), mutations, entry, s.length(), 0);
 
-    private int permutate(List<String> result, char[] entry, int i, int e) {
-        for (; i < entry.length; i++) {
-            if (entry[i] < 'A' || entry[i] > 'z') {
-                continue;
-            } else {
-                break;
-            }
-        }
-        for (; e < entry.length; e++) {
-            if (entry[e] < 'A' || entry[e] > 'z') {
-                continue;
-            } else {
-                break;
-            }
-        }
-        //e = Math.max(i, e);
-        if (e == entry.length) {
-            result.add(new String(entry));
-            return e;
-        }
-        for (int j = i; j < entry.length; j++) {
-            if (entry[j] < 'A' || entry[j] > 'z') {
-                continue;
-            };
-            entry[j] = entry[j] < 'a' ? (char)(entry[j] + 32) : (char)(entry[j] - 32);
-            //e = Math.max(j, e + 1);
-            e++;
-            e = permutate(result, entry, i, e);
-            e--;
-            //e = Math.max(j, e - 1);
-            for (; e > 0; e--) {
-                if (entry[e] < 'A' || entry[e] > 'z') {
-                    continue;
-                } else {
-                    break;
+        List<String> result = new ArrayList<>();
+        for (List<Integer> mutation : mutations) {
+            char[] source = s.toCharArray();
+            for (int i = 0; i < mutation.size(); i++) {
+                if (mutation.get(i) == 1) {
+                    source[i] = source[i] < 'a' ? (char)(source[i] + 32) : (char)(source[i] - 32);
                 }
             }
+            result.add(new String(source));
         }
-        return e;
+        return result;
+    }
+
+    private void mutate(char[] source, List<List<Integer>> mutations, List<Integer> entry, int n, int i) {
+        if (entry.size() == n) {
+            mutations.add(new ArrayList<>(entry));
+            return;
+        }
+        for (int b = 0; b < 2; b++) {
+            entry.add(b);
+            // skip
+            char c = source[entry.size()-1];
+            if (c < 'A' || c > 'z') {
+                b++;
+            }
+            mutate(source, mutations, entry, n, i);
+            entry.remove(entry.size() - 1);
+        }
     }
 }
