@@ -4,41 +4,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Problem91 {
+    private int[] cache = new int[1000];
+
+    // 1 - 1
+    // 11 - 2
+    // 111 - 3
+    // 1111 - 5
     public int numDecodings(String s) {
         char[] chars = s.toCharArray();
-        int[] result = new int[1];
-        List<List<Integer>> resultList = new ArrayList<>();
-        List<Integer> entry = new ArrayList<>();
-        numDecodings(chars, 0, 0, result, resultList, entry);
-        return resultList.size();
+        return numDecodings(chars, chars.length);
     }
 
-    private void numDecodings(char[] chars, int s, int e, int[] result, List<List<Integer>> resultList, List<Integer> entry) {
-        if (s >= chars.length || e >= chars.length) {
-            return;
+    private int numDecodings(char[] chars, int n) {
+        if (cache[n] > 0) return cache[n];
+
+        if (n <= 0) return 0;
+        if (n == 1) {
+            return valid(chars, 0, 0) ? 1 : 0;
         }
-        for (int i = 0; i <=1; i++) {
-            int num = number(chars, s, s + i);
-            if (num == 0) return;
-            entry.add(num);
-            if (s + i == chars.length - 1) {
-                resultList.add(new ArrayList<>(entry));
-            }
-            numDecodings(chars, s + i + 1, s + i + 1, result, resultList, entry);
-            entry.remove(entry.size() - 1);
+        if (n == 2) {
+            if (valid(chars, 0, 1) && valid(chars, 0, 0) && valid(chars, 1, 1)) return 2;
+            if (valid(chars, 0, 1)) return 1;
+            return valid(chars, 0, 1) ? 2 : valid(chars, 0, 0) && valid(chars, 1, 1) ? 1 : 0;
+        }
+        if (chars[n - 1] == '0' && chars[n - 2] == '0') {
+            return 0;
+        } else if (!valid(chars, n - 2, n - 1) && chars[n - 1] == '0') {
+            return 0;
+        } else if (chars[n - 1] == '0') {
+            int result = numDecodings(chars, n - 2);
+            cache[n] = result;
+            return result;
+        } else if (valid(chars, n - 2, n - 1)) {
+            int result = numDecodings(chars, n - 2) + numDecodings(chars, n - 1);
+            cache[n] = result;
+            return result;
+        } else {
+            int result = numDecodings(chars, n - 1);
+            cache[n] = result;
+            return result;
         }
     }
 
-    private int number(char[] chars, int s, int e) {
-        if (s >= chars.length || e >= chars.length) return 0;
-        if (e - s == 1) {
-            if (chars[s] == '0') return 0;
-            int num = (chars[s] - '0') * 10 + chars[s + 1] - '0';
-            if (num >= 1 && num <= 26) return num;
-        } else if (e == s) {
-            int num = chars[s] - '0';
-            if (num >= 1 && num <= 26) return num;
+    private boolean valid(char[] chars, int s, int e) {
+        if (chars[s] == '0') return false;
+        if (s == e && chars[s] >= '1' && chars[s] <= '9') {
+            return true;
+        } else {
+            int num = (chars[s] - '0') * 10 + chars[e] - '0';
+            return num > 0 && num <= 26;
         }
-        return 0;
     }
 }
