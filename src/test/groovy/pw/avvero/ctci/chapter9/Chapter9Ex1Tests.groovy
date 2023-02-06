@@ -9,6 +9,8 @@ class Chapter9Ex1Tests extends Specification {
     def "Ways to run #n stairs: #ways"() {
         expect:
         StairWalker.getWays(n) == ways
+        StairWalker.getWaysNumberRecursion(n) == ways.size()
+        StairWalker.getWaysNumberDp(n) == ways.size()
         where:
         n | ways
         1 | [[1]]
