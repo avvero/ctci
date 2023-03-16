@@ -7,12 +7,13 @@ class Problem166Tests extends Specification {
 
     @Unroll
     def "test"() {
-        when:
         expect:
         new Problem166().fractionToDecimal(numerator, denominator) == result
         where:
         numerator | denominator || result
 //        1         | 6           || "0.1(6)"
-        89        | 270         || "0.3(296)"
+//        89        | 270         || "0.3(296)"
+        -1        | 270         || "0.3(296)"
+        -1        | -2147483648 || "0.0000000004656612873077392578125"
     }
 }

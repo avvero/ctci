@@ -9,23 +9,16 @@ public class Problem166 {
 
     public String fractionToDecimal(int numerator, int denominator) {
         if (numerator == 0) return "0";
-        String sign = "";
-        if (denominator < 0 && numerator < 0) {
-            numerator = Math.abs(numerator);
-            denominator = Math.abs(denominator);
-        }
-        if (denominator < 0 || numerator < 0) {
-            sign = "-";
-            numerator = Math.abs(numerator);
-            denominator = Math.abs(denominator);
-        }
+
         char[] result = new char[1000];
         int[] index = new int[]{-1, 0};
-        if (numerator < denominator) {
+
+        String sign = (numerator * denominator) >= 0 ? "" : "-";
+        int r = Math.abs(numerator / denominator);
+        if (r <= 0) {
             tail(numerator * 10, denominator, result, 0, index);
             return sign + "0." +  toString(result, index);
         } else {
-            int r = numerator / denominator;
             int mod = numerator % denominator;
             if (mod == 0) {
                 return sign + String.valueOf(r);
@@ -64,11 +57,11 @@ public class Problem166 {
             cache.put(num, i);
         }
         index[1] = i;
-        if (num < den) {
+        int r = Math.abs(num / den);
+        if (r <= 0) {
             result[i] = '0';
             tail(num * 10, den, result, ++i, index);
         } else {
-            int r = num / den;
             int mod = num % den;
             if (mod == 0) {
                 result[i] = (char)(r + '0');
@@ -78,5 +71,4 @@ public class Problem166 {
             }
         }
     }
-
 }
