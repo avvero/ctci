@@ -27,7 +27,7 @@ public class Problem227_2 {
             if (isDigit(chars[i])) {
                 number = number * 10 + chars[i] - '0';
             } else {
-                // number from buffer
+                // number from buffer push to stack
                 Node node = new Node(true, number, '0', stack);
                 if (stack == null) {
                     stack = node;
@@ -37,24 +37,27 @@ public class Problem227_2 {
                     stack = node;
                 }
                 number = 0;
+                // push to stack
                 if (operand != null && (operand.chr == '*' || operand.chr == '/')) {
-                    Node a = node.prev;
-                    Node b = node;
-                    int result = calculate(a.val, b.val, operand.chr);
-                    Node next = new Node(true, result, '0', a.prev);
-                    if (a.prev == null) {
-                        stack = next;
-                        root = next;
-                    } else {
-                        a.prev.next = next;
-                        stack = next;
-                    }
+                    node = new Node(false, '0', operand.chr, stack);
+                    stack.next = node;
+                    stack = node;
                     operand = operand.prev;
                     if (operand != null) {
                         operand.next = null;
                     }
                 }
-                // sign
+                // push operand to stack
+                if (operand != null && (chars[i] == '+' || chars[i] == '-') && (operand.chr == '+' || operand.chr == '-')) {
+                    node = new Node(false, '0', operand.chr, stack);
+                    stack.next = node;
+                    stack = node;
+                    operand = operand.prev;
+                    if (operand != null) {
+                        operand.next = null;
+                    }
+                }
+                // push to operands
                 node = new Node(false, '0', chars[i], operand);
                 if (operand == null) {
                     operand = node;
@@ -64,7 +67,7 @@ public class Problem227_2 {
                 }
             }
         }
-        // final digits
+        // final digits push to stack
         Node node = new Node(true, number, '0', stack);
         if (stack == null) {
             stack = node;
@@ -73,6 +76,7 @@ public class Problem227_2 {
             stack.next = node;
             stack = node;
         }
+        // push operands to stack
         while (operand != null) {
             node = new Node(false, '0', operand.chr, stack);
             stack.next = node;
