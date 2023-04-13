@@ -8,7 +8,7 @@ class Problem227Tests extends Specification {
     @Unroll
     def "test"() {
         expect:
-        new Problem227_2().calculate(operation) == result
+        Math.calculate(operation) == result
         where:
         operation   || result
         "3+2*2"     || 7
