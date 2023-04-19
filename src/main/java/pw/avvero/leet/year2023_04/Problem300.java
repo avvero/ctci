@@ -1,5 +1,7 @@
 package pw.avvero.leet.year2023_04;
 
+import java.util.Arrays;
+
 public class Problem300 {
 
     public int lengthOfLIS(int[] nums) {
@@ -17,4 +19,16 @@ public class Problem300 {
         return result;
     }
 
+    public int lengthOfLIS2(int[] nums) {
+        int result = 1;
+        int[] piles = new int[nums.length + 1];
+        int len = 0;
+        for (int x : nums) {
+            int pile = Arrays.binarySearch(piles, 0, len, x);
+            if(pile < 0) pile = -(pile + 1);
+            piles[pile] = x;
+            if(pile == len) len++;
+        }
+        return len;
+    }
 }
