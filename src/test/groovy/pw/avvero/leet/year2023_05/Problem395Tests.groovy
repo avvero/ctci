@@ -12,6 +12,11 @@ class Problem395Tests extends Specification {
         new Problem395().longestSubstring(s, k) == n
         where:
         s          | k || n
+        "a"        | 1 || 1
+        "aa"       | 1 || 2
+        "aa"       | 2 || 2
+        "ab"       | 1 || 2
+        "ab"       | 2 || 0
         "baaabcb"  | 3 || 3
         "bbaaacbd" | 3 || 3
     }
