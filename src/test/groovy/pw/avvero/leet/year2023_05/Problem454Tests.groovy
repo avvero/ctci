@@ -12,6 +12,7 @@ class Problem454Tests extends Specification {
         new Problem454().fourSumCount(nums1 as int[], nums2 as int[], nums3 as int[], nums4 as int[]) == n
         where:
         nums1      | nums2      | nums3     | nums4      || n
+        [1]        | [-1]       | [0]       | [1]        || 0
         [0, 1, -1] | [-1, 1, 0] | [0, 0, 1] | [-1, 1, 1] || 17
     }
 }
