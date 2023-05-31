@@ -6,32 +6,35 @@ public class Problem135 {
 
     public int candy(int[] ratings) {
         int[] candies = new int[ratings.length];
-        Arrays.fill(candies, 1);
-        int undistributed = 1;
-        int s = 1;
-        int sNext = 1;
-        while (undistributed > 0) {
-            for (int i = 0; i < ratings.length; i++) {
-                if (ratings[i] < s) continue;
-                if (ratings[i] > s) {
-                    undistributed++;
-                    sNext = Math.min(s + 1, ratings[i]);
-                } else {
-                    if (i > 0 && ratings[i - 1] < ratings[i] && candies[i - 1] >= candies[i]) {
-                        candies[i] = candies[i - 1] + 1;
-                    }
-                    if (i < ratings.length - 1 && ratings[i + 1] < ratings[i] && candies[i + 1] >= candies[i]) {
-                        candies[i] = candies[i + 1] + 1;
-                    }
-                }
+        int total = 0;
+        for (int i = 0; i < ratings.length; i++) {
+            candies[i] = candy(ratings, i, candies);
+            total += candies[i];
+        }
+        return total;
+    }
+
+    private int candy(int[] ratings, int i, int[] candies) {
+        if (candies[i] > 0) {
+            return candies[i];
+        }
+        if (ratings[i] == 0) {
+            candies[i] = 1;
+            return candies[i];
+        }
+        candies[i] = 1;
+        if (i > 0 && ratings[i - 1] < ratings[i]) {
+            int nCandies = candy(ratings, i - 1, candies);
+            if (candies[i] <= nCandies) {
+                candies[i] = nCandies + 1;
             }
-            s = sNext;
-            undistributed--;
         }
-        int count = 0;
-        for (int candy : candies) {
-            count += candy;
+        if (i < ratings.length - 1 && ratings[i + 1] < ratings[i]) {
+            int nCandies = candy(ratings, i + 1, candies);
+            if (candies[i] <= nCandies) {
+                candies[i] = nCandies + 1;
+            }
         }
-        return count;
+        return candies[i];
     }
 }
