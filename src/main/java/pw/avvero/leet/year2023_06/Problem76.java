@@ -14,19 +14,18 @@ public class Problem76 {
         }
         int[] w = new int[]{-1, -1};
         String min = "";
+        int result;
         do {
-            int result = findNext(s, w, targetHash, t.length());
+            result = findNext(s, w, targetHash, t.length());
             if (result == 1) {
                 String minSoFar = s.substring(w[0], w[1]);
                 if (min.length() == 0 || minSoFar.length() < min.length()) {
                     min = minSoFar;
                 }
-            } else if (result == 2) {
-                // continue further;
             } else {
                 break;
             }
-        } while (w[1] < s.length());
+        } while (w[0] < s.length());
         return min;
     }
 
@@ -49,7 +48,9 @@ public class Problem76 {
                 hash[i]++;
                 cap++;
             }
-            if (hash[i] > targetHash[i]) return 2;
+            if (hash[i] > targetHash[i]) {
+                cap--;
+            };
             w[1]++;
         }
         return cap == tl ? 1 : 0;
