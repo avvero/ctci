@@ -1,5 +1,7 @@
 package pw.avvero.leet.year2023_06;
 
+import java.util.LinkedList;
+
 public class Problem76 {
 
     // ADOBECODEBANC
@@ -8,52 +10,65 @@ public class Problem76 {
     // BANC
 
     public String minWindow(String s, String t) {
+        String result = "";
+        //
         int[] targetHash = new int[64];
+        int targetCap = 0;
         for (int i = 0; i < t.length(); i++) {
-            targetHash[t.charAt(i) - 'A']++;
+            targetHash[hash(t.charAt(i))]++;
+            targetCap++;
         }
-        int[] w = new int[]{-1, -1};
-        String min = "";
-        int result;
-        do {
-            result = findNext(s, w, targetHash, t.length());
-            if (result == 1) {
-                String minSoFar = s.substring(w[0], w[1]);
-                if (min.length() == 0 || minSoFar.length() < min.length()) {
-                    min = minSoFar;
+        int[] hash = new int[64];
+        int cap = 0;
+        int i = 0, j = 0;
+        LinkedList<Integer> iz = new LinkedList<>();
+        while (j < s.length()) {
+            int h = hash(s.charAt(j));
+            if (targetHash[h] > 0) {
+                if (hash[h] < targetHash[h]) {
+                    cap++;
+                }
+                hash[h]++;
+                if (j > 0) {
+                    iz.add(j);
+                }
+            }
+            if (targetCap == cap) {
+                String nextResult = s.substring(i, j + 1);
+                if (nextResult.length() == t.length()) return nextResult;
+                if (result.equals("")  || nextResult.length() < result.length()) {
+                    result = nextResult;
+                }
+                int f = hash(s.charAt(i));
+                if (hash[f] > 0) {
+                    hash[f]--;
+                    if (hash[f] < targetHash[f]) {
+                        cap--;
+                        j++;
+                    } else { // first char is redundant, step back
+                        hash[h]--;
+                        cap--;
+                    }
+                } else { // first char is redundant, step back
+                    hash[h]--;
+                    cap--;
+                }
+                if (!iz.isEmpty()) {
+                    int nexti;
+                    do {
+                        nexti = iz.removeFirst();
+                    } while(i == nexti && !iz.isEmpty());
+                    i = nexti;
                 }
             } else {
-                break;
+                j++;
             }
-        } while (w[0] < s.length());
-        return min;
+        }
+        return result;
     }
 
-    private int findNext(String s, int[] w, int[] targetHash, int tl) {
-        int[] hash = new int[targetHash.length];
-        w[0]++;
-        int cap = 0;
-        while (w[0] < s.length() && targetHash[s.charAt(w[0]) - 'A'] == 0) {
-            w[0]++;
-        }
-        if (w[0] == s.length()) return 0;
-        //
-        hash[s.charAt(w[0]) - 'A']++;
-        cap++;
-        w[1] = w[0] + 1;
-        if (cap == tl) return 1;
-        while (cap < tl && w[1] < s.length()) {
-            int i = s.charAt(w[1]) - 'A';
-            if (targetHash[i] > 0) {
-                hash[i]++;
-                cap++;
-            }
-            if (hash[i] > targetHash[i]) {
-                cap--;
-            };
-            w[1]++;
-        }
-        return cap == tl ? 1 : 0;
+    private int hash(char c) {
+        return c - 'A';
     }
 
 }
