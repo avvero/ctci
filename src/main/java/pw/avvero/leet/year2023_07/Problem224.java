@@ -44,13 +44,19 @@ public class Problem224 {
                     stack.add(a);
                     a = 0;
                     if (operator.size() > 0) {
-                        stack.add(operator.pop());
+                        char c = (char) operator.removeLast();
+                        if (c == '+' || c == '-') {
+                            stack.add(c);
+                        }
                     }
                 }
-                if (chars[i] != ' ') {
+                if (chars[i] == '+' || chars[i] == '-' || chars[i] == '(') {
                     operator.add(chars[i]);
                 }
             }
+        }
+        while (operator.size() > 0) {
+            stack.add(operator.removeLast());
         }
         return stack;
     }
