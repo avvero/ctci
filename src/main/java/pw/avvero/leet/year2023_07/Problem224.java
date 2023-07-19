@@ -10,7 +10,7 @@ public class Problem224 {
         for (int i = 0; i < postfix.size(); i++) {
             if (postfix.get(i) instanceof Character) {
                 int b = (int) stack.pop();
-                int a = (int) stack.pop();
+                int a = stack.peekFirst() != null ? (int) stack.pop() : 0;
                 if ((Character) postfix.get(i) == '+') {
                     stack.push(a + b);
                 } else if ((Character) postfix.get(i) == '-') {
