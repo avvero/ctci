@@ -1,7 +1,5 @@
 package pw.avvero.leet.year2023_07;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedList;
 
 public class Problem224 {
@@ -11,12 +9,12 @@ public class Problem224 {
         LinkedList stack = new LinkedList();
         for (int i = 0; i < postfix.size(); i++) {
             if (postfix.get(i) instanceof Character) {
-                int a = (int) stack.pop();
                 int b = (int) stack.pop();
+                int a = (int) stack.pop();
                 if ((Character) postfix.get(i) == '+') {
                     stack.push(a + b);
-                } else {
-                    stack.push(b - a);
+                } else if ((Character) postfix.get(i) == '-') {
+                    stack.push(a - b);
                 }
             } else {
                 stack.push(postfix.get(i));
@@ -30,27 +28,29 @@ public class Problem224 {
         LinkedList operator = new LinkedList();
         char[] chars = s.toCharArray();
         int a = 0;
-        boolean digitSiquence = false;
         for (int i = 0; i < chars.length; i++) {
-            boolean nonDigit = true;
-            if (chars[i] >= '0' && chars[i] <= '9') {
-                digitSiquence = true;
+            if (isDigit(chars[i])) {
                 a = a * 10 + chars[i] - '0';
-                nonDigit = false;
-            }
-            if (nonDigit || i == chars.length - 1) { // last
-                if (digitSiquence) {
-                    digitSiquence = false;
+                if (i == chars.length - 1 || !isDigit(chars[i + 1])) {
                     stack.add(a);
                     a = 0;
-                    if (operator.size() > 0) {
-                        char c = (char) operator.removeLast();
-                        if (c == '+' || c == '-') {
-                            stack.add(c);
-                        }
+                }
+            } else {
+                if (chars[i] == ' ') continue;
+                if (chars[i] == ')') {
+                    Character c = (Character) operator.removeLast();
+                    while (c != '(') {
+                        stack.add(c);
+                        c = (Character) operator.removeLast();
                     }
                 }
-                if (chars[i] == '+' || chars[i] == '-' || chars[i] == '(') {
+                if (chars[i] == '(') {
+                    operator.add(chars[i]);
+                }
+                if (chars[i] == '+' || chars[i] == '-') {
+                    if (operator.size() > 0 && (Character) operator.getLast() != '(') {
+                        stack.add(operator.removeLast());
+                    }
                     operator.add(chars[i]);
                 }
             }
@@ -61,4 +61,7 @@ public class Problem224 {
         return stack;
     }
 
+    private boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
 }
