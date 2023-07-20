@@ -25,10 +25,23 @@ public class Problem224 {
                 }
                 //
                 if (operand.size() > 0) {
-                    evalStack(stack, operand);
+                    if (c == ')') {
+                        char o = (Character) operand.peekLast();
+                        while (o != '(') {
+                            if (operand.size() > 0) {
+                                evalStack(stack, operand);
+                            }
+                            o = operand.peekLast() != null ? (Character) operand.peekLast() : 0;
+                        }
+                        operand.removeLast();
+                    } else if ((c == '+' || c == '-' ) && (Character) operand.peekLast() != '(') {
+                        evalStack(stack, operand);
+                    }
                 }
                 //
-                operand.add(c);
+                if (c != ')') {
+                    operand.add(c);
+                }
             }
         }
         if (dseq) {
