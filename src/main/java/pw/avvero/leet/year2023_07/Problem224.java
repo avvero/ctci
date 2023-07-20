@@ -5,60 +5,50 @@ import java.util.LinkedList;
 public class Problem224 {
 
     public int calculate(String s) {
-        LinkedList postfix = toPostFix(s);
+        long result = 0;
         LinkedList stack = new LinkedList();
-        for (int i = 0; i < postfix.size(); i++) {
-            if (postfix.get(i) instanceof Character) {
-                int b = (int) stack.pop();
-                int a = stack.peekFirst() != null ? (int) stack.pop() : 0;
-                if ((Character) postfix.get(i) == '+') {
-                    stack.push(a + b);
-                } else if ((Character) postfix.get(i) == '-') {
-                    stack.push(a - b);
-                }
+        LinkedList operand = new LinkedList();
+        long d = 0;
+        boolean dseq = false;
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            char c = chars[i];
+            if (c == ' ') continue;
+            if (isDigit(c)) {
+                dseq = true;
+                d = d * 10 + c - '0';
             } else {
-                stack.push(postfix.get(i));
+                if (dseq) {
+                    stack.add(d);
+                    d = 0;
+                    dseq = false;
+                }
+                //
+                if (operand.size() > 0) {
+                    evalStack(stack, operand);
+                }
+                //
+                operand.add(c);
             }
         }
-        return (int) stack.pop();
+        if (dseq) {
+            stack.add(d);
+        }
+        if (operand.size() > 0) {
+            evalStack(stack, operand);
+        }
+        return ((Long) stack.removeLast()).intValue();
     }
 
-    private LinkedList toPostFix(String s) {
-        LinkedList stack = new LinkedList();
-        LinkedList operator = new LinkedList();
-        char[] chars = s.toCharArray();
-        int a = 0;
-        for (int i = 0; i < chars.length; i++) {
-            if (isDigit(chars[i])) {
-                a = a * 10 + chars[i] - '0';
-                if (i == chars.length - 1 || !isDigit(chars[i + 1])) {
-                    stack.add(a);
-                    a = 0;
-                }
-            } else {
-                if (chars[i] == ' ') continue;
-                if (chars[i] == ')') {
-                    Character c = (Character) operator.removeLast();
-                    while (c != '(') {
-                        stack.add(c);
-                        c = (Character) operator.removeLast();
-                    }
-                }
-                if (chars[i] == '(') {
-                    operator.add(chars[i]);
-                }
-                if (chars[i] == '+' || chars[i] == '-') {
-                    if (operator.size() > 0 && (Character) operator.getLast() != '(') {
-                        stack.add(operator.removeLast());
-                    }
-                    operator.add(chars[i]);
-                }
-            }
+    private void evalStack(LinkedList stack, LinkedList operand) {
+        long b = (long) stack.removeLast();
+        long a = (long) stack.removeLast();
+        char o = (Character) operand.removeLast();
+        if (o == '+') {
+            stack.add(a + b);
+        } else if (o == '-') {
+            stack.add(a - b);
         }
-        while (operator.size() > 0) {
-            stack.add(operator.removeLast());
-        }
-        return stack;
     }
 
     private boolean isDigit(char c) {

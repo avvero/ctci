@@ -12,6 +12,7 @@ class Problem224Tests extends Specification {
         new Problem224().calculate(exp) == result
         where:
         exp                   | result
+        "1 - 2 + 1"           | 0
         "1-(-2)"              | 3
         "1-(     -2)"         | 3
         "-(2 + 3)"            | -5
@@ -19,7 +20,6 @@ class Problem224Tests extends Specification {
         "1-(2+1+1)"           | -3
         "10+21"               | 31
         "1 - (2 + 1)"         | -2
-        "1 - 2 + 1"           | 0
         "(1 - 2) + 1"         | 0
         " 2-1 + 2 "           | 3
         "1 + 1"               | 2
