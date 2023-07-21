@@ -8,23 +8,33 @@ public class Problem224 {
         LinkedList stack = new LinkedList();
 
         long result = 0;
-        long n = 0;
+        long number = 0;
         long sign = 1;
         char[] chars = s.toCharArray();
         for (int i = 0; i < chars.length; i++) {
            if (Character.isDigit(chars[i])) {
-               n = n * 10 + chars[i] - '0';
+               number = number * 10 + chars[i] - '0';
            } else if (chars[i] == '+') {
-               result += n * sign;
-               n = 0;
+               result += number * sign;
+               number = 0;
                sign = 1;
            } else if (chars[i] == '-') {
-               result += n * sign;
-               n = 0;
+               result += number * sign;
+               number = 0;
                sign = -1;
+           } else if (chars[i] == '(') {
+               stack.push(result);
+               stack.push(sign);
+               sign = 1;
+               result = 0;
+           } else if (chars[i] == ')') {
+               result += number * sign;
+               number = 0;
+               result *= (Long) stack.pop();
+               result += (Long) stack.pop();
            }
         }
-        result += n * sign;
+        if(number != 0) result += sign * number;
         return (int )result;
     }
 
