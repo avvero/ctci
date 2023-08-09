@@ -12,6 +12,7 @@ class Problem22Tests extends Specification {
         new Problem22().generateParenthesis(n) == result
         where:
         n || result
+        2 || ["((()))", "(()())", "(())()", "()(())", "()()()"]
         3 || ["((()))", "(()())", "(())()", "()(())", "()()()"]
     }
 }

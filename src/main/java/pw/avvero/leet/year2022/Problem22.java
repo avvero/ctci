@@ -1,33 +1,50 @@
 package pw.avvero.leet.year2022;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Problem22 {
 
+    private char[] s = new char[]{'(', ')'};
+
     public List<String> generateParenthesis(int n) {
-        List<String> rst = new LinkedList<>();
-        char[] temp = new char[2 * n];
-        helper(temp, n, n, rst);
-        return rst;
+        List<String> result = new ArrayList<>();
+        char[] entry = new char[n*2];
+        generateParenthesis(result, entry, n*2, 0);
+        return result;
     }
 
-    private void helper(char[] temp, int left, int right, List<String> rst){
-        if(left == 0 && right == 0){
-            rst.add(new String(temp));
+    private void generateParenthesis(List<String> result, char[] entry, int n, int e) {
+        if (e == n) {
+            if (correct(entry, new int[]{0}, '0')) {
+                result.add(new String(entry));
+            }
             return;
         }
-
-        int cur = temp.length - left - right;
-
-        if(left > 0){
-            temp[cur] = '(';
-            helper(temp, left - 1, right, rst);
+        for (int i = 0; i < s.length; i++) {
+            entry[e] = s[i];
+            e++;
+            generateParenthesis(result, entry, n, e);
+            e--;
         }
+    }
 
-        if(right > left){
-            temp[cur] = ')';
-            helper(temp, left, right - 1, rst);
+    private boolean correct(char[] entry, int[] cur, int exp) {
+        if (cur[0] == entry.length && exp != '0') return false;
+
+        for (; cur[0] < entry.length;) {
+            if (entry[cur[0]] == '(') {
+                cur[0]++;
+                boolean result = correct(entry, cur, ')');
+                if (!result) return false;
+            } else if (entry[cur[0]] == exp) {
+                cur[0]++;
+                return true;
+            } else {
+                return false;
+            }
         }
+        return exp == '0';
     }
 }
