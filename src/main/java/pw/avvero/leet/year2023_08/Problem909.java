@@ -33,11 +33,12 @@ public class Problem909 {
                     if (setStep(visited, linked, val + 1)) {
                         toVisite.add(linked);
                     }
-                    break;
+//                    break;
                 }
             }
         }
-        return visited[0][0];
+        int[] last = next(board, start, squeresCount - 1);
+        return visited[last[0]][last[1]];
     }
 
     private boolean setStep(int[][] visited, int[] current, int step) {

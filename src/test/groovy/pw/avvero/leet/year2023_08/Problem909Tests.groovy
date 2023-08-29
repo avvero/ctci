@@ -64,7 +64,19 @@ class Problem909Tests extends Specification {
                 [-1, 3]
         ] as int[][]
         then:
-        new Problem909().snakesAndLadders(board) == 2
+        new Problem909().snakesAndLadders(board) == 1
+    }
+
+    @Unroll
+    def "test6"() {
+        when:
+        def board = [
+                [1,1,-1],
+                [1,1,1],
+                [-1,1,1]
+        ] as int[][]
+        then:
+        new Problem909().snakesAndLadders(board) == -1
     }
 
     @Unroll
