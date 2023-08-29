@@ -1,7 +1,6 @@
 package pw.avvero.leet.year2023_08;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class Problem909 {
 
@@ -19,26 +18,26 @@ public class Problem909 {
             int val = visited[current[0]][current[1]];
             for (int i = 1; i <= Math.min(6, squeresCount); i++) {
                 int[] next = next(board, current, i);
-                if (next[0] == -1 || next[1] == -1 || next[0] >= board.length || next[1] >= board[0].length) break;
-                setStep(visited, next, val + 1);
-                if (i == Math.min(6, squeresCount)) {
-                    toVisite.add(next);
-                }
+                if (next[0] == -1 || next[1] == -1) break;
                 int nextLink = board[next[0]][next[1]];
                 if (nextLink > -1) {
                     int[] linked = next(board, start, nextLink - 1);
                     if (linked[0] < 0 || linked[1] < 0) {
-                        linked = new int[]{0, 0};
+                        linked = next(board, start, squeresCount - 1); // last
                     }
                     if (setStep(visited, linked, val + 1)) {
                         toVisite.add(linked);
                     }
-//                    break;
+                } else {
+                    if (setStep(visited, next, val + 1)) {
+                        toVisite.add(next);
+                    }
                 }
             }
         }
         int[] last = next(board, start, squeresCount - 1);
-        return visited[last[0]][last[1]];
+        int result = visited[last[0]][last[1]];
+        return result > 0 ? result : -1;
     }
 
     private boolean setStep(int[][] visited, int[] current, int step) {
