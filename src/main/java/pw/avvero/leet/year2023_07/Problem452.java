@@ -5,7 +5,7 @@ import java.util.*;
 public class Problem452 {
 
     public int findMinArrowShots(int[][] points) {
-        Arrays.sort(points, Comparator.comparing(a -> new Long(a[1])));
+//        Arrays.sort(points, Comparator.comparing(a -> new Long(a[1])));
         int arrows = 1;
         int arrow = points[0][1];
         for (int i = 0; i < points.length; i++) {
