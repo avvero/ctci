@@ -1,36 +1,33 @@
 package pw.avvero.leet.year2023_08;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Problem127 {
 
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        Set<String> dictionary = new HashSet<>();
+        HashMap<String, Integer> depthMap = new HashMap<>();
+        LinkedList<String> toVisit = new LinkedList<>();
+        toVisit.add(beginWord);
+        depthMap.put(beginWord, 1);
         for (String word : wordList) {
-            dictionary.add(word);
+            depthMap.putIfAbsent(word, 0);
         }
-        int result = ladderLength(beginWord, endWord, dictionary);
-        return result > -1 ? result : 0;
-    }
-
-    private int ladderLength(String beginWord, String endWord, Set<String> dictionary) {
-        if (beginWord.equals(endWord)) return 1;
-        if (!dictionary.contains(endWord)) return -1;
-        int length = -1;
-        for (String word : dictionary) {
-            int diffs = compare(beginWord, word);
-            if (diffs <= 1) {
-                Set<String> subDictionary = new HashSet<>(dictionary);
-                subDictionary.remove(word);
-                int lengthSoFar = ladderLength(word, endWord, subDictionary);
-                if (lengthSoFar > -1) {
-                    length = length == -1 ? lengthSoFar + 1 : Math.min(length, lengthSoFar + 1);
+        while (!toVisit.isEmpty()) {
+            String current = toVisit.removeFirst();
+            Integer currentDepth = depthMap.get(current);
+            for (String word : wordList) {
+                int diffs = compare(current, word);
+                if (diffs <= 1) {
+                    Integer wordDepth = depthMap.get(word);
+                    if (wordDepth == 0 || wordDepth > currentDepth + 1) {
+                        toVisit.add(word);
+                        depthMap.put(word, currentDepth + 1);
+                    }
                 }
             }
         }
-        return length;
+        Integer result = depthMap.get(endWord);
+        return result != null ? result : 0;
     }
 
     private int compare(String a, String b) {
