@@ -37,7 +37,7 @@ public class Problem212 {
         if (i == word.length) return true;
         if (node == null || node.children.isEmpty()) return false;
         Node child = node.children.get(word[i]);
-//        if (child == null) return false;
+        if (child == null) return false;
         return find(child, word, i + 1);
     }
 
@@ -57,6 +57,5 @@ public class Problem212 {
         traverse(board, i - 1, j, visited, n, child);
         visited[i][j] = 0;
     }
-
 
 }
