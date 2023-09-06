@@ -36,7 +36,7 @@ class Problem212Tests extends Specification {
     @Unroll
     def "test4"() {
         expect:
-        new Problem212().findWords(board, words) == ["abcdefg","gfedcbaaa","eaabcdgfa","befa","dgc","ade"]
+        new Problem212().findWords(board, words) == ["abcdefg","gfedcbaaa","eaabcdgfa","befa"]
         where:
         board = [
                 ["a","b","c"],
@@ -49,7 +49,7 @@ class Problem212Tests extends Specification {
     @Unroll
     def "test5"() {
         expect:
-        new Problem212().findWords(board, words) == ["abcdefg","befa","eaabcdgfa","gfedcbaaa"]
+        new Problem212().findWords(board, words) == ["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]
         where:
         board = [
                 ["a","a","a","a","a","a","a","a","a","a","a","a"],
