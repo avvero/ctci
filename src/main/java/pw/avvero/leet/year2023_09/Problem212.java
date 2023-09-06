@@ -9,7 +9,7 @@ public class Problem212 {
 
     private static class Node {
         List<int[]> places = new ArrayList<>();
-        HashMap<Character, Node> children = new HashMap<>();
+        Node[] children = new Node[26];
     }
     public List<String> findWords(char[][] board, String[] words) {
         Node root = new Node();
@@ -46,7 +46,7 @@ public class Problem212 {
 
     private List<int[]> findPaths(Node node, char[] word, int i) {
         if (word.length == i) return node.places;
-        Node child = node.children.get(word[i]);
+        Node child = node.children[word[i] - 'a'];
         if (child == null) return node.places;
         return findPaths(child, word, i + 1);
     }
@@ -62,10 +62,10 @@ public class Problem212 {
             return;
         }
         visited[i][j] = n;
-        Node child = node.children.get(board[i][j]);
+        Node child = node.children[board[i][j] - 'a'];
         if (child == null) {
             child = new Node();
-            node.children.put(board[i][j], child);
+            node.children[board[i][j] - 'a'] = child;
         }
         node.places.add(new int[] {i, j});
         traverse(board, i, j + 1, visited, n, child, word, wi + 1, found);
