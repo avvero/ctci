@@ -24,9 +24,7 @@ public class Problem212 {
             int[] found = new int[1];
             char[] chars = word.toCharArray();
             List<int[]> starts = findPaths(root, chars, 0);
-            if (starts.isEmpty()) {
-                starts.add(new int[]{0, 0});
-            }
+            starts.add(new int[]{0, 0});
             for (int[] start : new ArrayList<>(starts)) {
                 if (found[0] == 1) break;
                 for (int i = start[0]; i < board.length; i++) {
@@ -47,6 +45,7 @@ public class Problem212 {
     }
 
     private List<int[]> findPaths(Node node, char[] word, int i) {
+        if (word.length == i) return node.places;
         Node child = node.children.get(word[i]);
         if (child == null) return node.places;
         return findPaths(child, word, i + 1);
