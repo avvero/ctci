@@ -1,16 +1,17 @@
 package pw.avvero.leet.year2023_09;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Problem212 {
 
     private static class Node {
-        List<int[]> places = new ArrayList<>();
-        Node[] children = new Node[26];
+        char chr;
+        Node parent;
+        int level;
+        HashMap<String, int[]> places = new HashMap<>();
+        HashMap<Character, Node> children = new HashMap<>();
     }
+
     public List<String> findWords(char[][] board, String[] words) {
         Node root = new Node();
 
@@ -23,19 +24,27 @@ public class Problem212 {
         for (String word: words) {
             int[] found = new int[1];
             char[] chars = word.toCharArray();
-            List<int[]> starts = findPaths(root, chars, 0);
-            starts.add(new int[]{0, 0});
-            for (int[] start : new ArrayList<>(starts)) {
+            ++n;
+            Node toVisit = findPaths(root, chars, 0, visited, n);
+            for (int[] place : toVisit.places.values()) {
+                visited[place[0]][place[1]] = -1;
+                traverse(board, place[0], place[1], visited, n, toVisit.parent, chars, toVisit.parent.level, found);
+                if (found[0] == 1) {
+                    result.add(word);
+                } else {
+                    //found[0] = 1; // dirty break
+                }
+            }
+            if (found[0] == 1) continue;
+            //
+            for (int i = 0; i < board.length; i++) {
                 if (found[0] == 1) break;
-                for (int i = start[0]; i < board.length; i++) {
+                for (int j = 0; j < board[i].length; j++) {
                     if (found[0] == 1) break;
-                    for (int j = start[1]; j < board[i].length; j++) {
-                        if (found[0] == 1) break;
-                        if (chars[0] == board[i][j]) {
-                            traverse(board, i, j, visited, ++n, root, chars, 0, found);
-                            if (found[0] == 1) {
-                                result.add(word);
-                            }
+                    if (chars[0] == board[i][j]) {
+                        traverse(board, i, j, visited, ++n, root, chars, 0, found);
+                        if (found[0] == 1) {
+                            result.add(word);
                         }
                     }
                 }
@@ -44,11 +53,15 @@ public class Problem212 {
         return result;
     }
 
-    private List<int[]> findPaths(Node node, char[] word, int i) {
-        if (word.length == i) return node.places;
-        Node child = node.children[word[i] - 'a'];
-        if (child == null) return node.places;
-        return findPaths(child, word, i + 1);
+    private Node findPaths(Node node, char[] word, int wi, int[][] visited, int n) {
+        if (word.length - 1 ==  wi) return node;
+        for (int[] place : node.places.values()) {
+            visited[place[0]][place[1]] = n;
+        }
+        if (word.length ==  wi) return node;
+        Node child = node.children.get(word[wi]);
+        if (child == null) return node;
+        return findPaths(child, word, wi + 1, visited, n);
     }
 
     private void traverse(char[][] board, int i, int j, int[][] visited, int n, Node node, char[] word, int wi, int[] found) {
@@ -56,23 +69,27 @@ public class Problem212 {
         if (i < 0 || i >= board.length) return;
         if (j < 0 || j >= board[i].length) return;
         if (visited[i][j] == n) return;
+
+        Node child = node.children.get(board[i][j]);
+        if (child == null) {
+            child = new Node();
+            child.parent = node;
+            child.level = node.level + 1;
+            child.chr = board[i][j];
+            node.children.put(board[i][j], child);
+        }
+        child.places.putIfAbsent(i  + ":" + j, new int[] {i, j});
+
         if (board[i][j] != word[wi]) return;
         if (word.length - 1 == wi) {
             found[0] = 1;
             return;
         }
         visited[i][j] = n;
-        Node child = node.children[board[i][j] - 'a'];
-        if (child == null) {
-            child = new Node();
-            node.children[board[i][j] - 'a'] = child;
-        }
-        node.places.add(new int[] {i, j});
         traverse(board, i, j + 1, visited, n, child, word, wi + 1, found);
         traverse(board, i, j - 1, visited, n, child, word, wi + 1, found);
         traverse(board, i + 1, j, visited, n, child, word, wi + 1, found);
         traverse(board, i - 1, j, visited, n, child, word, wi + 1, found);
         visited[i][j] = 0;
     }
-
 }
