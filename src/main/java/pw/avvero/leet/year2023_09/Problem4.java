@@ -3,18 +3,17 @@ package pw.avvero.leet.year2023_09;
 public class Problem4 {
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int[] result = new int[nums1.length + nums2.length];
-        int[] range = new int[]{0, 0};
-        merge(nums1, nums2, result, range);
-        int mid = (range[1] - range[0]) / 2;
-        if ((range[1] - range[0]) % 2 == 0) {
+        int[] result = merge(nums1, nums2);
+        int mid = result.length / 2;
+        if (result.length % 2 == 1) {
             return result[mid];
         } else {
-            return (double) (result[mid] + result[mid + 1]) / 2;
+            return (double) (result[mid - 1] + result[mid]) / 2;
         }
     }
 
-    private void merge(int[] nums1, int[] nums2, int[] result, int[] range) {
+    private int[] merge(int[] nums1, int[] nums2) {
+        int[] result = new int[nums1.length + nums2.length];
         int i1 = 0;
         int i2 = 0;
         int ir = 0;
@@ -31,6 +30,6 @@ public class Problem4 {
         while(i2 < nums2.length) {
             result[ir++] = nums2[i2++];
         }
-        range[1] = --ir;
+        return result;
     }
 }
