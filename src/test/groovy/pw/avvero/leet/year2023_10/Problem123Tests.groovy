@@ -12,7 +12,7 @@ class Problem123Tests extends Specification {
         new Problem123().maxProfit(prices as int[]) == result
         where:
         prices                   || result
-//        [3, 3, 5, 0, 0, 3, 1, 4] || 6
-        [3, 3, 5, 1, 1, 3, 1, 4] || 5
+        [3, 3, 5, 0, 0, 3, 1, 4] || 6
+//        [3, 3, 5, 1, 1, 3, 1, 4] || 5
     }
 }
