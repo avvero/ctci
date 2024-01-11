@@ -12,8 +12,9 @@ class Problem1312Tests extends Specification {
         new Problem1312().minInsertions(s) == result
         where:
         s          || result
-        "mbadm"    || 2
+        "eetcode"  || 4
         "leetcode" || 5
+        "mbadm"    || 2
         "zzazz"    || 0
     }
 
