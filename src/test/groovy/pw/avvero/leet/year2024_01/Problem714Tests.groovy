@@ -11,8 +11,9 @@ class Problem714Tests extends Specification {
         expect:
         new Problem714().maxProfit(prices as int[], fee) == result
         where:
-        prices             | fee || result
-        [1, 3, 2, 8, 4, 9] | 2   || 8
+        prices              | fee || result
+        [1, 3, 7, 5, 10, 3] | 3   || 6
+        [1, 3, 2, 8, 4, 9]  | 2   || 8
     }
 
 }
