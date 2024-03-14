@@ -1,28 +1,25 @@
 package pw.avvero.leet.year2023_04;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Problem322 {
 
     public int coinChange(int[] coins, int amount) {
-        return change(coins, amount, new int[amount + 1]);
-    }
-
-    private int change(int[] coins, int amount, int[] cache) {
-        if (amount < 0) return -1;
+        Arrays.sort(coins);
         if (amount == 0) return 0;
-        if (cache[amount] != 0) {
-            return cache[amount];
-        }
-        int result = Integer.MAX_VALUE;
-        for (int i = 0; i < coins.length; i++) {
-            int mResult = change(coins, amount - coins[i], cache);
-            if (mResult >= 0) {
-                result = Math.min(result, 1 + mResult);
+        int[] dp = new int[amount + 1];
+        for (int coin : coins) {
+            for (int i = coin; i <= amount; i++) {
+                int r = i % coin;
+                int d = i / coin;
+                if (r == 0) {
+                    dp[i] = dp[i] == 0 ? d : Math.min(dp[i], d);
+                } else if (dp[r] > 0) {
+                    dp[i] = dp[i] == 0 ? d + dp[r] : Math.min(dp[i], d + dp[r]);
+                }
             }
         }
-        result = result == Integer.MAX_VALUE ? -1 : result;
-        cache[amount] = result;
-        return result;
+        return dp[amount] > 0 ? dp[amount] : -1;
     }
 }
