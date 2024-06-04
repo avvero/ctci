@@ -12,6 +12,7 @@ class ProblemTests611 extends Specification {
         new Problem611().triangleNumber(nums as int[]) == result
         where:
         nums         || result
+        [2, 2, 3, 4] || 3
         [4, 2, 3, 4] || 4
 
     }

@@ -10,9 +10,9 @@ public class Problem611 {
         int n = 0;
         for (int a = 0; a < nums.length - 2; a++) {
             for (int b = a + 1; b < nums.length - 1; b++) {
-                int min = searchMoreThan(nums, b + 1, nums.length - 1, nums[b] + 1);
-                int max = searchLessThan(nums, b + 1, nums.length - 1, nums[a] + nums[b] + 1);
-                if (max - min >= 0) {
+                int min = searchMoreThan(nums, b + 1, nums.length - 1, nums[b]);
+                int max = searchLessThan(nums, b + 1, nums.length - 1, nums[a] + nums[b]);
+                if (min > -1 && max > -1 && max - min >= 0) {
                     n = n + (max - min + 1);
                 }
             }
@@ -27,9 +27,7 @@ public class Problem611 {
     private int searchMoreThan(int[] nums, int low, int hi, int min) {
         if (low > hi) return -1;
         int m = low + (hi - low) / 2;
-        if (nums[m] == min) {
-            return m;
-        } else if (nums[m] < min) {
+        if (nums[m] < min) {
             return searchMoreThan(nums, m + 1, hi, min);
         } else {
             int next = searchMoreThan(nums, low, m - 1, min);
@@ -40,13 +38,11 @@ public class Problem611 {
     private int searchLessThan(int[] nums, int low, int hi, int max) {
         if (low > hi) return -1;
         int m = low + (hi - low) / 2;
-        if (nums[m] == max) {
-            return m;
-        } else if (nums[m] < max) {
-            int next = searchMoreThan(nums, m + 1, hi, max);
+        if (nums[m] < max) {
+            int next = searchLessThan(nums, m + 1, hi, max);
             return next != -1 ? next: m;
         } else {
-            return searchMoreThan(nums, low, m - 1, max);
+            return searchLessThan(nums, low, m - 1, max);
         }
     }
 
