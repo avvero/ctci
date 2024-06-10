@@ -20,10 +20,6 @@ public class Problem611 {
         return n;
     }
 
-    private boolean isTriangle(int a, int b, int c) {
-        return a + b > c && a + c > b && c + b > a;
-    }
-
     private int searchMoreThan(int[] nums, int low, int hi, int min) {
         if (low > hi) return -1;
         int m = low + (hi - low) / 2;
