@@ -3,4 +3,6 @@
 **Solution**: Gradle project with Spock dependency.\
 **Status**: Currently using.
 
+----
+
 # Cracking the coding interview
