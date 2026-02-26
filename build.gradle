@@ -6,13 +6,19 @@ plugins {
 group 'pw.avvero'
 version '1.0-SNAPSHOT'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy:3.0.10'
-    testImplementation platform("org.spockframework:spock-bom:2.1-groovy-3.0")
+    implementation 'org.apache.groovy:groovy:4.0.15'
+    testImplementation platform("org.spockframework:spock-bom:2.3-groovy-4.0")
     testImplementation "org.spockframework:spock-core"
 }
 
